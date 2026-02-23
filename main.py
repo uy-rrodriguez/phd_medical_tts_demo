@@ -50,7 +50,7 @@ sample_ref = """\
 Recently, miR-126 was identified as a metastasis suppressing miRNA that is \
 downregulated in relapsing breast cancer, leukemia, and cervical cancer."""
 
-cv_dataset_path: str = "voice_samples/common_1k"  # Path to a set of voices
+cv_dataset_path: str = "data/common_1k"  # Path to a set of voices
 cv_ids = [
     "18099400",
     "18840889",
@@ -78,7 +78,7 @@ for voice in voices_ds:
 
     col1, col2 = st.columns([0.2, 0.8], width=600)
     col1.text("Ref:")
-    col2.audio(f"data/cv_clips/{voice['path'].replace('.mp3', '.wav')}")
+    col2.audio(f"{cv_dataset_path}/clips/{voice['path'].replace('.mp3', '.wav')}")
 
     for tts in TTS_MODELS:
         col1, col2 = st.columns([0.2, 0.8], width=600)
