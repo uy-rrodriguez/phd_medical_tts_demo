@@ -67,17 +67,30 @@ voices_ds = [
 
 st.title("TTS Common-Voice Demo")
 
-st.header(corpus)
+st.markdown(
+"""\
+Below there are a handful of audio recordings synthesised by the different TTS
+models under evaluation, using different accents from CommonVoice. Three of
+these TTS allow cloning voices, while Kokoro only allows selecting a voice from
+a pre-trained set.
+
+TTS with voice cloning capability:
+ - Fish-Speech
+ - Style-TTS2
+ - ZipVoice
+""")
+
+st.header(f"Corpus: {corpus}")
 st.markdown(f"**Sample:** {sample_id} | {sample_filename}")
-st.text(f'"{sample_ref}"')
+st.markdown(f'**Reference text:** "{sample_ref}"')
 
 st.divider()
 
 for voice in voices_ds:
-    st.markdown(f"**{voice['voice_id']} {voice['gender'].capitalize()} {voice['accent'].capitalize()}**")
+    st.markdown(f"**Voice {voice['voice_id']}: {voice['gender'].capitalize()} {voice['accent'].capitalize()}**")
 
     col1, col2 = st.columns([0.2, 0.8], width=600)
-    col1.text("Ref:")
+    col1.text("Reference:")
     col2.audio(f"{cv_dataset_path}/clips/{voice['path'].replace('.mp3', '.wav')}")
 
     for tts in TTS_MODELS:
@@ -90,10 +103,21 @@ for voice in voices_ds:
 
 st.divider()
 
+st.markdown(
+"""\
+The recordings below were created from the same text but using a pre-defined
+voice from Kokoro: "Isabella". A short sample using this voice was created with
+Kokoro and then re-used in the other TTS as audio prompt for voice cloning.
+
+The audio generated from Kokoro sounds cleaner than the others, maybe because
+there is no cloning involved and the TTS knows this voice from its pre-training
+data.
+""")
+
 st.markdown(f"**Kokoro voice: Isabella Female British**")
 
 col1, col2 = st.columns([0.2, 0.8], width=600)
-col1.text("Kokoro:")
+col1.text("kokoro:")
 col2.audio(f"data/tts/kokoro/{corpus}/{sample_filename}")
 
 for tts in TTS_MODELS:
